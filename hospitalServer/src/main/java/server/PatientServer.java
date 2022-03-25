@@ -7,6 +7,12 @@ public class PatientServer {
 
     public PatientServer() {
         this.server = Javalin.create();
+
+        this.server.get("/patients",context -> ApiController.getPatientList(context));
+        this.server.get("/patients/patient", context -> ApiController.patientDetails(context));
+        this.server.post("/patients/patient/update", context -> ApiController.updatePatient(context));
+        this.server.get("server/login",context ->ApiController.login(context));
+        this.server.post("server/signup",context -> ApiController.signup(context));
     }
 
     public void start(int port){
@@ -19,6 +25,6 @@ public class PatientServer {
 
     public static void main(String[] args){
         PatientServer server = new PatientServer();
-        server.start(8080);
+        server.start(5005);
     }
 }
