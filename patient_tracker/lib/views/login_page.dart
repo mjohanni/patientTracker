@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:patient_tracker/services/api_services.dart';
+import 'package:provider/provider.dart';
 
+import '../models/doctor.dart';
 import 'home_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -12,15 +15,16 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  TextEditingController _username = TextEditingController();
+  TextEditingController _email = TextEditingController();
   TextEditingController _password = TextEditingController();
 
   void clearFields(){
-    _username.clear();
+    _email.clear();
     _password.clear();
   }
   @override
   Widget build(BuildContext context) {
+    Doctor doctor;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -48,9 +52,9 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(
                     children: [
                       ListTile(
-                        title: const Text("Please enter account username"),
+                        title: const Text("Please enter account email"),
                         subtitle: TextFormField(
-                          controller: _username,
+                          controller: _email,
                           decoration: const InputDecoration(hintText: ""),
                         ),
                       ),
@@ -65,12 +69,14 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                       ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
+                            await Provider.of<ApiServices>(context, listen: false).getDoctor(email: _email.text, password: _password.text, ip: widget.ip, port: widget.port);
+                            if()
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => HomePage(
-                                        ip: widget.ip, port: widget.port, doctor: _username.text,)));
+                                        ip: widget.ip, port: widget.port, doctor: _email.text,)));
                         },
                         child: Text("START"),
                       ),

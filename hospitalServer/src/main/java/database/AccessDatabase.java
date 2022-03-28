@@ -264,16 +264,16 @@ public class AccessDatabase {
     public UserLogin login(String email, String password) throws SQLException {
         UserLogin userLogin = new UserLogin();
         Connection conn = connect();
-        String sql = "SELECT * FROM quotes WHERE '"+email+"' = email AND '"+password+"' = password";
+        String sql = "SELECT * FROM login WHERE '"+email+"' = email AND '"+password+"' = password";
         Statement statement = conn.createStatement();
         ResultSet result = statement.executeQuery(sql);
 
         while(result.next()){
             System.out.println("searching database");
             if (email.equals(result.getString("email")) && password.equals(result.getString("password"))){
-                System.out.println(result.getInt("id"));
-                System.out.println(result.getString("text"));
-                System.out.println(result.getString("name"));
+                System.out.println(result.getInt("hcp"));
+                System.out.println(result.getString("email"));
+                System.out.println(result.getString("password"));
 
                 userLogin.setUsername(result.getString("hcp"));
                 userLogin.setUsername(result.getString("username"));
@@ -282,6 +282,9 @@ public class AccessDatabase {
             }
         }
         System.out.println("username or password incorrect.");
+        userLogin.setUsername("empty");
+        userLogin.setEmail("empty");
+        userLogin.setPassword("empty");
         return null;
     }
 }

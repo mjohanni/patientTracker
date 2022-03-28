@@ -48,6 +48,7 @@ public class ApiController {
         String username = context.pathParamAsClass("username", String.class).get();
         String password = context.pathParamAsClass("password", String.class).get();
         UserLogin result = database.login(username,password);
+        System.out.println(result);
         context.json(result);
     }
 
