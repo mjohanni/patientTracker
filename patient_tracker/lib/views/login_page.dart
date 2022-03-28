@@ -71,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
                       ElevatedButton(
                         onPressed: () async {
                             await Provider.of<ApiServices>(context, listen: false).getDoctor(email: _email.text, password: _password.text, ip: widget.ip, port: widget.port);
-                            if()
+                            // if()
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
