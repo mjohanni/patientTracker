@@ -45,8 +45,10 @@ public class ApiController {
     }
 
     public static void login(Context context) throws SQLException {
-        String username = context.pathParamAsClass("username", String.class).get();
+        String username = context.pathParamAsClass("name", String.class).get();
         String password = context.pathParamAsClass("password", String.class).get();
+        System.out.println(username);
+        System.out.println(password);
         UserLogin result = database.login(username,password);
         System.out.println(result);
         context.json(result);

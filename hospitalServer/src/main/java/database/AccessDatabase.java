@@ -15,7 +15,7 @@ import java.util.List;
 // String endDate; Integer age; List<Medication> medications; String symptoms; String notes;
 
 public class AccessDatabase {
-    private static final String CONN = "jdbc:sqlite:hospitalDatabase.db";
+    private static final String CONN = "jdbc:sqlite:hospitalDatabase";
 
     public Connection connect() {
         Connection conn = null;
@@ -222,13 +222,12 @@ public class AccessDatabase {
     }
 
     public void signUp(UserLogin userLogin){
-        String sql = "SELECT * FROM login WHERE '"+userLogin.getUsername()+"' = hcp OR '"+ userLogin.getEmail()+"' = email";
+        String sql = "SELECT * FROM login WHERE '"+userLogin.getHcp()+"' = hcp OR '"+ userLogin.getEmail()+"' = email";
         Statement statement;
         try (Connection conn = connect()) {
             statement = conn.createStatement();
             ResultSet result = statement.executeQuery(sql);
-            conn.close();
-            if(result == null){
+            if(!result.next()){
                 String signUpSql = "INSERT INTO login (\n" +
                         "                       hcp,\n" +
                         "                       email,\n" +
@@ -241,7 +240,7 @@ public class AccessDatabase {
                         "                   );";
                 try (Connection connect = connect();
                      PreparedStatement preState = connect.prepareStatement(signUpSql)){
-                    preState.setString(1,userLogin.getUsername());
+                    preState.setString(1,userLogin.getHcp());
                     preState.setString(2,userLogin.getEmail());
                     preState.setString(3,userLogin.getPassword());
 
@@ -261,28 +260,28 @@ public class AccessDatabase {
 
     }
 
-    public UserLogin login(String email, String password) throws SQLException {
+    public UserLogin login(String hcp, String password) throws SQLException {
         UserLogin userLogin = new UserLogin();
         Connection conn = connect();
-        String sql = "SELECT * FROM login WHERE '"+email+"' = email AND '"+password+"' = password";
+        String sql = "SELECT * FROM login WHERE '"+hcp+"' = hcp AND '"+password+"' = password";
         Statement statement = conn.createStatement();
         ResultSet result = statement.executeQuery(sql);
 
         while(result.next()){
             System.out.println("searching database");
-            if (email.equals(result.getString("email")) && password.equals(result.getString("password"))){
+            if (hcp.equals(result.getString("hcp")) && password.equals(result.getString("password"))){
                 System.out.println(result.getInt("hcp"));
                 System.out.println(result.getString("email"));
                 System.out.println(result.getString("password"));
 
-                userLogin.setUsername(result.getString("hcp"));
-                userLogin.setUsername(result.getString("username"));
+                userLogin.setHcp(result.getString("hcp"));
+                userLogin.setEmail(result.getString("email"));
                 userLogin.setPassword(result.getString("password"));
                 return userLogin;
             }
         }
         System.out.println("username or password incorrect.");
-        userLogin.setUsername("empty");
+        userLogin.setHcp("empty");
         userLogin.setEmail("empty");
         userLogin.setPassword("empty");
         return null;

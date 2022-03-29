@@ -3,16 +3,16 @@ package models;
 import org.eclipse.jetty.server.Authentication;
 
 public class UserLogin {
-    private String username;
+    private String hcp;
     private String email;
     private String password;
 
-    public String getUsername() {
-        return username;
+    public String getHcp() {
+        return hcp;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setHcp(String hcp) {
+        this.hcp = hcp;
     }
 
     public String getEmail() {
@@ -31,9 +31,9 @@ public class UserLogin {
         this.password = password;
     }
 
-    public static UserLogin create(String username, String email, String password){
+    public static UserLogin create(String hcp, String email, String password){
        UserLogin user = new UserLogin();
-        user.setUsername(username);
+        user.setHcp(hcp);
         user.setEmail(email);
         user.setPassword(password);
         return user;

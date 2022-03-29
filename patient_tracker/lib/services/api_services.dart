@@ -17,4 +17,9 @@ class ApiServices extends ChangeNotifier {
     doctor = (await HttpServices().getDoctor(email: email, password: password, port: port, ip: ip))!;
     notifyListeners();
   }
+
+  Future<void> postDoctor({required String username,required String email,required String password,required String ip,required String port}) async {
+    await HttpServices().createDoctor(hcp: username, email: email, password: password, ip: ip, port: port);
+    notifyListeners();
+  }
 }
