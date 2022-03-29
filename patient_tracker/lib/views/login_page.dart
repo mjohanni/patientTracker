@@ -18,11 +18,20 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
+  Doctor? doctor;
 
   void clearFields(){
     _email.clear();
     _password.clear();
   }
+
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //
+  //   super.initState();
+  // }
+
   @override
   Widget build(BuildContext context) {
     Doctor doctor;
@@ -71,12 +80,19 @@ class _LoginPageState extends State<LoginPage> {
                             ElevatedButton(
                               onPressed: () async {
                                   await Provider.of<ApiServices>(context, listen: false).getDoctor(email: _email.text, password: _password.text, ip: widget.ip, port: widget.port);
-                                  // if()
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => HomePage(
-                                              ip: widget.ip, port: widget.port, doctor: _email.text,)));
+                                  doctor = await Provider.of<ApiServices>(context,listen:false).doctor;
+                                  print(doctor.hcp);
+                                  if (doctor.hcp.isNotEmpty && doctor.password.isNotEmpty && doctor.email.isNotEmpty) {
+                                    print("yes");
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => HomePage(
+                                                ip: widget.ip, port: widget.port, doctor: doctor.hcp,)));
+                                  }
+                                  else{
+                                    print("no");
+                                  }
                               },
                               child: Text("LOGIN"),
                             ),

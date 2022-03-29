@@ -75,7 +75,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               builder: (context) => HomePage(
                                     ip: widget.ip,
                                     port: widget.port,
-                                    doctor: _email.text,
+                                    doctor: _username.text,
                                   )));
                     },
                     child: Text("Sign up"),

@@ -221,7 +221,7 @@ public class AccessDatabase {
         }
     }
 
-    public void signUp(UserLogin userLogin){
+    public String signUp(UserLogin userLogin){
         String sql = "SELECT * FROM login WHERE '"+userLogin.getHcp()+"' = hcp OR '"+ userLogin.getEmail()+"' = email";
         Statement statement;
         try (Connection conn = connect()) {
@@ -245,19 +245,19 @@ public class AccessDatabase {
                     preState.setString(3,userLogin.getPassword());
 
                     preState.execute();
-                    System.out.println("user has been added");
+                    return "added";
                 }
                 catch (SQLException e){
                     System.out.println(e.getMessage());
                     e.printStackTrace();
                 }
             }else{
-                System.out.println("user already exists");
+                return "exists";
             }
         }catch (Exception e){
             e.printStackTrace();
         }
-
+        return "";
     }
 
     public UserLogin login(String hcp, String password) throws SQLException {

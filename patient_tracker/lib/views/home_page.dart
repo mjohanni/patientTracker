@@ -13,16 +13,24 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("_Home Screen_"),
-      centerTitle: true,
+        centerTitle: true,
       ),
-      body: const HomeBuild(),
-      floatingActionButton: FloatingActionButton (
-        child: const Text("log out"),
-        onPressed: () {
-          Navigator.pop(context);
-        },
+      body: Column(
+        children: [
+          HomeBuild(hcp: doctor, ip: ip, port: port),
+          Padding(
+            padding: EdgeInsets.all(20),
+            child: Center(
+              child: ElevatedButton(
+                child: const Text("Log out"),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
 }
-

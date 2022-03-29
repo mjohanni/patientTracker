@@ -19,6 +19,7 @@ class TestServer {
         HttpResponse<String> response = Unirest.get("http://localhost:5000/server/login/matto/12345").asString();
         assertEquals(200, response.getStatus());
         quoteServer.stop();
+        
     }
 }
 

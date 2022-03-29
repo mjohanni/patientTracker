@@ -23,11 +23,11 @@ class HttpServices{
 
   Future<Doctor?> getDoctor({required String email,required String password, required String port, required String ip}) async {
 
-    Uri loginUrl = Uri.parse("http://192.168.3.28:$port/$email/$password");
+    Uri loginUrl = Uri.parse("http://192.168.3.28:$port/server/login/$email/$password");
     Response res = await get(loginUrl);
 
     if (res.statusCode == 200){
-      Map<String,String> body = jsonDecode(res.body);
+      Map<String,dynamic> body = jsonDecode(res.body);
       print(body["hcp"]);
       print(body["email"]);
       print(body["password"]);
@@ -62,8 +62,8 @@ class HttpServices{
         }));
 
     if(res.statusCode == 200 || res.statusCode == 201){
+      //add
       print("doctor has been added");
-      // return Quote.fromJson(jsonDecode(res.body));
     }else{
       print(res.statusCode);
       print(res.body);

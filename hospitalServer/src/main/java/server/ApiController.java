@@ -56,7 +56,6 @@ public class ApiController {
 
     public static void signup(Context context){
         UserLogin userLogin = context.bodyAsClass(UserLogin.class);
-        database.signUp(userLogin);
-        context.json("Success");
+        context.json(database.signUp(userLogin));
     }
 }
